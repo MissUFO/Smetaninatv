@@ -1,0 +1,42 @@
+jQuery(document).ready(function($){
+  
+$("#slideshow > div:gt(0)").hide();
+  
+function progress(timeleft, timetotal, $element) {
+    var progressBarWidth = timeleft * $element.width() / timetotal;
+    $element.find('div').animate({ width: progressBarWidth }, 800);
+  
+    if(timeleft > 0) {
+        setTimeout(function() {
+            progress(timeleft - 1, timetotal, $element);
+        }, 500);
+    }
+};
+  
+function slideshow() {
+    var textLength = $('#slideshow > div:first > p').html().length;
+    textLength *= 45;
+    progress(textLength / 1000, textLength / 1000, $('#progressBar'));
+    
+    //console.log('slideshow wait for: '+textLength);
+    
+    setTimeout(function() {
+   
+      $('#slideshow > div:first')
+      .fadeOut(1000)
+      .next()
+      .fadeIn(1000)
+      .end()
+      .appendTo('#slideshow');
+      
+      slideshow();
+      
+    },textLength);
+  }
+  slideshow();
+
+
+  
+}); 
+
+

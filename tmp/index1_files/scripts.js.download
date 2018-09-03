@@ -1,0 +1,44 @@
+jQuery(document).ready(function() {
+    
+    var isRetina = (
+	window.devicePixelRatio > 2 ||
+	(window.matchMedia && window.matchMedia("(-webkit-min-device-pixel-ratio: 2),(-moz-min-device-pixel-ratio: 2),(min-device-pixel-ratio: 2)").matches)
+    );
+    
+    if(isRetina){
+       jQuery('.img_retina').show(); 
+    }else{
+       jQuery('.img_no_retina').show();
+    }
+
+
+
+    //Handle select logo backend
+    var inputs = document.querySelectorAll( '.custom-file-input' );
+    Array.prototype.forEach.call( inputs, function( input )
+    {
+        var label = input.nextElementSibling;
+        var labelVal = label.innerHTML;
+
+        input.addEventListener( 'change', function( e )
+        {
+            var fileName = '';
+            fileName = e.target.value.split( '\\' ).pop();
+
+
+            //Strip chars after 20
+            if(fileName.length > 23){
+               fileName = fileName.substr(0, 23);
+               fileName = fileName+'...';
+            }
+
+            if( fileName ){
+                label.innerHTML = fileName;
+            }
+            else{
+                label.innerHTML = labelVal;
+             }
+        });
+    });
+
+});
